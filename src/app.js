@@ -5,13 +5,14 @@ const { uuid } = require("uuidv4");
 
 const app = express();
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+
 
 const repositories = [];
 
 app.get("/repositories", (request, response) => {
-  return response.json(repositories);
+  return response.status(200).json(repositories);
 });
 
 app.post("/repositories", (request, response) => {
@@ -26,7 +27,7 @@ app.post("/repositories", (request, response) => {
   }
   repositories.push(repository);
 
-  return response.json(repository);
+  return response.status(200).json(repository);
 
 });
 
@@ -69,6 +70,7 @@ app.post("/repositories/:id/like", (request, response) => {
     return response.status(400).send();
 
   repository.likes += 1;
+  console.log("repository back: ", response);
 
   return response.json(repository);
 });
